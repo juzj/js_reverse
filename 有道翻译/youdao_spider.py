@@ -15,6 +15,7 @@ input_value = "hello"
 url = "http://fanyi.youdao.com/translate_o?smartresult=dict&smartresult=rule"
 
 headers = {
+    # TODO 修改成自己的cookie
     "Cookie": "自己的cookie",
     "Host": "fanyi.youdao.com",
     "Origin": "http://fanyi.youdao.com",

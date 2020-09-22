@@ -1,0 +1,8 @@
+''':arg
+
+krtoken: "GRsOUH2Y0sleUWaWRhzqtvOfFrg6lU9k3cvt-CzuWt3pH0WzLEtM8efvmku9NQEl"
+account: "EJUUw3eyjOsd+AKn05GV9AoQ6iNDPoA0rxySNG8+xYSIeJT4jX3FSUV3s4PACWuQqKmErWWF55Z7oUA6aeLkZqsvPnqdwltJGT/Dybb2iV18+o1k1esJvFhAIbkLahPQLTIZbcVgL5jpc57VRya5WQJwQEjQRSSSFFNB6m2HBeE="
+password: "SGpyyURlkjFxRJ/lCicYDv4gZWpgXxqsgjUpoUSSTMU4D+MkQCpXHNQkJJMzYOgUPbkmWkCdJ46Om8dQ+pVGncBMYRlmvxFGxPkGBLa8m5DxKkEUI/fHcwlODYXixO7Aqkgjhm/WU/NhwgvD94/gpGmv4JOzPBbvStbvTgMkPtE="
+partner_id: "web"
+timestamp: 1598098378175
+'''
