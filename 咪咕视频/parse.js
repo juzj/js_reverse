@@ -1,718 +1,435 @@
-var W = []
-    , X = W.slice
-    , Y = W.concat
-    , Z = W.push
-    , $ = W.indexOf
-    , _ = {}
-    , ab = _.toString
-    , bb = _.hasOwnProperty
-    , cb = {}
-    , db = "1.11.1"
-    , eb = function(a, b) {
-    return new eb.fn.init(a,b)
+function setMaxDigits(n) {
+    maxDigits = n;
+    ZERO_ARRAY = new Array(maxDigits);
+    for (var t = 0; t < ZERO_ARRAY.length; t++)
+        ZERO_ARRAY[t] = 0;
+    bigZero = new BigInt;
+    bigOne = new BigInt;
+    bigOne.digits[0] = 1
 }
-    , fb = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g
-    , gb = /^-ms-/
-    , hb = /-([\da-z])/gi
-    , ib = function(a, b) {
-    return b.toUpperCase()
-};
-
-eb.fn = eb.prototype = {
-    jquery: db,
-    constructor: eb,
-    selector: "",
-    length: 0,
-    toArray: function() {
-        return X.call(this)
-    },
-    get: function(a) {
-        return null != a ? 0 > a ? this[a + this.length] : this[a] : X.call(this)
-    },
-    pushStack: function(a) {
-        var b = eb.merge(this.constructor(), a);
-        return b.prevObject = this,
-            b.context = this.context,
-            b
-    },
-    each: function(a, b) {
-        return eb.each(this, a, b)
-    },
-    map: function(a) {
-        return this.pushStack(eb.map(this, function(b, c) {
-            return a.call(b, c, b)
-        }))
-    },
-    slice: function() {
-        return this.pushStack(X.apply(this, arguments))
-    },
-    first: function() {
-        return this.eq(0)
-    },
-    last: function() {
-        return this.eq(-1)
-    },
-    eq: function(a) {
-        var b = this.length
-            , c = +a + (0 > a ? b : 0);
-        return this.pushStack(c >= 0 && b > c ? [this[c]] : [])
-    },
-    end: function() {
-        return this.prevObject || this.constructor(null)
-    },
-    push: Z,
-    sort: W.sort,
-    splice: W.splice
-},
-    eb.extend = eb.fn.extend = function() {
-        var a, b, c, d, e, f, g = arguments[0] || {}, h = 1, i = arguments.length, j = !1;
-        for ("boolean" == typeof g && (j = g,
-            g = arguments[h] || {},
-            h++),
-             "object" == typeof g || eb.isFunction(g) || (g = {}),
-             h === i && (g = this,
-                 h--); i > h; h++)
-            if (null != (e = arguments[h]))
-                for (d in e)
-                    a = g[d],
-                        c = e[d],
-                    g !== c && (j && c && (eb.isPlainObject(c) || (b = eb.isArray(c))) ? (b ? (b = !1,
-                        f = a && eb.isArray(a) ? a : []) : f = a && eb.isPlainObject(a) ? a : {},
-                        g[d] = eb.extend(j, f, c)) : void 0 !== c && (g[d] = c));
-        return g
-    }
-    ,
-    eb.extend({
-        expando: "jQuery" + (db + Math.random()).replace(/\D/g, ""),
-        isReady: !0,
-        error: function(a) {
-            throw new Error(a)
-        },
-        noop: function() {},
-        isFunction: function(a) {
-            return "function" === eb.type(a)
-        },
-        isArray: Array.isArray || function(a) {
-            return "array" === eb.type(a)
-        }
-        ,
-        isWindow: function(a) {
-            return null != a && a == a.window
-        },
-        isNumeric: function(a) {
-            return !eb.isArray(a) && a - parseFloat(a) >= 0
-        },
-        isEmptyObject: function(a) {
-            var b;
-            for (b in a)
-                return !1;
-            return !0
-        },
-        isPlainObject: function(a) {
-            var b;
-            if (!a || "object" !== eb.type(a) || a.nodeType || eb.isWindow(a))
-                return !1;
-            try {
-                if (a.constructor && !bb.call(a, "constructor") && !bb.call(a.constructor.prototype, "isPrototypeOf"))
-                    return !1
-            } catch (c) {
-                return !1
-            }
-            if (cb.ownLast)
-                for (b in a)
-                    return bb.call(a, b);
-            for (b in a)
-                ;
-            return void 0 === b || bb.call(a, b)
-        },
-        type: function(a) {
-            return null == a ? a + "" : "object" == typeof a || "function" == typeof a ? _[ab.call(a)] || "object" : typeof a
-        },
-        globalEval: function(b) {
-            b && eb.trim(b) && (a.execScript || function(b) {
-                    a.eval.call(a, b)
-                }
-            )(b)
-        },
-        camelCase: function(a) {
-            return a.replace(gb, "ms-").replace(hb, ib)
-        },
-        nodeName: function(a, b) {
-            return a.nodeName && a.nodeName.toLowerCase() === b.toLowerCase()
-        },
-        each: function(a, b, d) {
-            var e, f = 0, g = a.length, h = c(a);
-            if (d) {
-                if (h)
-                    for (; g > f && (e = b.apply(a[f], d),
-                    e !== !1); f++)
-                        ;
-                else
-                    for (f in a)
-                        if (e = b.apply(a[f], d),
-                        e === !1)
-                            break
-            } else if (h)
-                for (; g > f && (e = b.call(a[f], f, a[f]),
-                e !== !1); f++)
-                    ;
-            else
-                for (f in a)
-                    if (e = b.call(a[f], f, a[f]),
-                    e === !1)
-                        break;
-            return a
-        },
-        trim: function(a) {
-            return null == a ? "" : (a + "").replace(fb, "")
-        },
-        makeArray: function(a, b) {
-            var d = b || [];
-            return null != a && (c(Object(a)) ? eb.merge(d, "string" == typeof a ? [a] : a) : Z.call(d, a)),
-                d
-        },
-        inArray: function(a, b, c) {
-            var d;
-            if (b) {
-                if ($)
-                    return $.call(b, a, c);
-                for (d = b.length,
-                         c = c ? 0 > c ? Math.max(0, d + c) : c : 0; d > c; c++)
-                    if (c in b && b[c] === a)
-                        return c
-            }
-            return -1
-        },
-        merge: function(a, b) {
-            for (var c = +b.length, d = 0, e = a.length; c > d; )
-                a[e++] = b[d++];
-            if (c !== c)
-                for (; void 0 !== b[d]; )
-                    a[e++] = b[d++];
-            return a.length = e,
-                a
-        },
-        grep: function(a, b, c) {
-            for (var d, e = [], f = 0, g = a.length, h = !c; g > f; f++)
-                d = !b(a[f], f),
-                d !== h && e.push(a[f]);
-            return e
-        },
-        map: function(a, b, d) {
-            var e, f = 0, g = a.length, h = c(a), i = [];
-            if (h)
-                for (; g > f; f++)
-                    e = b(a[f], f, d),
-                    null != e && i.push(e);
-            else
-                for (f in a)
-                    e = b(a[f], f, d),
-                    null != e && i.push(e);
-            return Y.apply([], i)
-        },
-        guid: 1,
-        proxy: function(a, b) {
-            var c, d, e;
-            return "string" == typeof b && (e = a[b],
-                b = a,
-                a = e),
-                eb.isFunction(a) ? (c = X.call(arguments, 2),
-                    d = function() {
-                        return a.apply(b || this, c.concat(X.call(arguments)))
-                    }
-                    ,
-                    d.guid = a.guid = a.guid || eb.guid++,
-                    d) : void 0
-        },
-        now: function() {
-            return +new Date
-        },
-        support: cb
-    }),
-    eb.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(a, b) {
-        _["[object " + b + "]"] = b.toLowerCase()
-    });
-
-function c(a) {
-    var b = a.length
-        , c = eb.type(a);
-    return "function" === c || eb.isWindow(a) ? !1 : 1 === a.nodeType && b ? !0 : "array" === c || 0 === b || "number" == typeof b && b > 0 && b - 1 in a
+function BigInt(n) {
+    this.digits = typeof n == "boolean" && n == !0 ? null : ZERO_ARRAY.slice(0);
+    this.isNeg = !1
 }
-var a={}
-var nb, ob = a.document, pb = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/, qb = eb.fn.init = function(a, b) {
-    var c, d;
-    if (!a)
-        return this;
-    if ("string" == typeof a) {
-        if (c = "<" === a.charAt(0) && ">" === a.charAt(a.length - 1) && a.length >= 3 ? [null, a, null] : pb.exec(a),
-        !c || !c[1] && b)
-            return !b || b.jquery ? (b || nb).find(a) : this.constructor(b).find(a);
-        if (c[1]) {
-            if (b = b instanceof eb ? b[0] : b,
-                eb.merge(this, eb.parseHTML(c[1], b && b.nodeType ? b.ownerDocument || b : ob, !0)),
-            lb.test(c[1]) && eb.isPlainObject(b))
-                for (c in b)
-                    eb.isFunction(this[c]) ? this[c](b[c]) : this.attr(c, b[c]);
-            return this
-        }
-        if (d = ob.getElementById(c[2]),
-        d && d.parentNode) {
-            if (d.id !== c[2])
-                return nb.find(a);
-            this.length = 1,
-                this[0] = d
-        }
-        return this.context = ob,
-            this.selector = a,
-            this
-    }
-    return a.nodeType ? (this.context = this[0] = a,
-        this.length = 1,
-        this) : eb.isFunction(a) ? "undefined" != typeof nb.ready ? nb.ready(a) : a(eb) : (void 0 !== a.selector && (this.selector = a.selector,
-        this.context = a.context),
-        eb.makeArray(a, this))
-}
-function ab() {}
-var pb, qb, rb, sb = 256;
-function db() {
-    this.n = null,
-        this.e = 0,
-        this.d = null,
-        this.p = null,
-        this.q = null,
-        this.dmp1 = null,
-        this.dmq1 = null,
-        this.coeff = null
-}
-function eb(a, b) {
-    null != a && null != b && a.length > 0 && b.length > 0 ? (this.n = bb(a, 16),
-        this.e = parseInt(b, 16)) : alert("网络异常，请点击登录重试")
-}
-function fb(a) {
-    return a.modPowInt(this.e, this.n)
-}
-function cb(a, b) {
-    if (b < a.length + 11)
-        return alert("Message too long for RSA"),
-            null;
-    for (var c = new Array, e = a.length - 1; e >= 0 && b > 0; ) {
-        var f = a.charCodeAt(e--);
-        128 > f ? c[--b] = f : f > 127 && 2048 > f ? (c[--b] = 63 & f | 128,
-            c[--b] = f >> 6 | 192) : (c[--b] = 63 & f | 128,
-            c[--b] = f >> 6 & 63 | 128,
-            c[--b] = f >> 12 | 224)
-    }
-    c[--b] = 0;
-    for (var g = new ab, h = new Array; b > 2; ) {
-        for (h[0] = 0; 0 == h[0]; )
-            g.nextBytes(h);
-        c[--b] = h[0]
-    }
-    return c[--b] = 2,
-        c[--b] = 0,
-        new d(c)
-}
-function gb(a) {
-    var b = cb(a, this.n.bitLength() + 7 >> 3);
-    if (null == b)
-        return null;
-    var c = this.doPublic(b);
-    if (null == c)
-        return null;
-    var d = c.toString(16);
-    return 0 == (1 & d.length) ? d : "0" + d
-}
-function bb(a, b) {
-    return new d(a,b)
-}
-function d(a, b, c) {
-    null != a && ("number" == typeof a ? this.fromNumber(a, b, c) : null == b && "string" != typeof a ? this.fromString(a, 256) : this.fromString(a, b))
-}
-function n(a, b) {
-    var c;
-    if (16 == b)
-        c = 4;
-    else if (8 == b)
-        c = 3;
-    else if (256 == b)
-        c = 8;
-    else if (2 == b)
-        c = 1;
-    else if (32 == b)
-        c = 5;
+function biFromDecimal(n) {
+    for (var u = n.charAt(0) == "-", t = u ? 1 : 0, i, f, r; t < n.length && n.charAt(t) == "0"; )
+        ++t;
+    if (t == n.length)
+        i = new BigInt;
     else {
-        if (4 != b)
-            return void this.fromRadix(a, b);
-        c = 2
+        for (f = n.length - t,
+        r = f % dpl10,
+        r == 0 && (r = dpl10),
+        i = biFromNumber(Number(n.substr(t, r))),
+        t += r; t < n.length; )
+            i = biAdd(biMultiply(i, lr10), biFromNumber(Number(n.substr(t, dpl10)))),
+            t += dpl10;
+        i.isNeg = u
     }
-    this.t = 0,
-        this.s = 0;
-    for (var e = a.length, f = !1, g = 0; --e >= 0; ) {
-        var h = 8 == c ? 255 & a[e] : j(a, e);
-        0 > h ? "-" == a.charAt(e) && (f = !0) : (f = !1,
-            0 == g ? this[this.t++] = h : g + c > this.DB ? (this[this.t - 1] |= (h & (1 << this.DB - g) - 1) << g,
-                this[this.t++] = h >> this.DB - g) : this[this.t - 1] |= h << g,
-            g += c,
-        g >= this.DB && (g -= this.DB))
+    return i
+}
+function biCopy(n) {
+    var t = new BigInt(!0);
+    return t.digits = n.digits.slice(0),
+    t.isNeg = n.isNeg,
+    t
+}
+function biFromNumber(n) {
+    var t = new BigInt, i;
+    for (t.isNeg = n < 0,
+    n = Math.abs(n),
+    i = 0; n > 0; )
+        t.digits[i++] = n & maxDigitVal,
+        n = Math.floor(n / biRadix);
+    return t
+}
+function reverseStr(n) {
+    for (var i = "", t = n.length - 1; t > -1; --t)
+        i += n.charAt(t);
+    return i
+}
+function biToString(n, t) {
+    var r = new BigInt, i, u;
+    for (r.digits[0] = t,
+    i = biDivideModulo(n, r),
+    u = hexatrigesimalToChar[i[1].digits[0]]; biCompare(i[0], bigZero) == 1; )
+        i = biDivideModulo(i[0], r),
+        digit = i[1].digits[0],
+        u += hexatrigesimalToChar[i[1].digits[0]];
+    return (n.isNeg ? "-" : "") + reverseStr(u)
+}
+function biToDecimal(n) {
+    var i = new BigInt, t, r;
+    for (i.digits[0] = 10,
+    t = biDivideModulo(n, i),
+    r = String(t[1].digits[0]); biCompare(t[0], bigZero) == 1; )
+        t = biDivideModulo(t[0], i),
+        r += String(t[1].digits[0]);
+    return (n.isNeg ? "-" : "") + reverseStr(r)
+}
+function digitToHex(n) {
+    var t = "";
+    for (i = 0; i < 4; ++i)
+        t += hexToChar[n & 15],
+        n >>>= 4;
+    return reverseStr(t)
+}
+function biToHex(n) {
+    for (var i = "", r = biHighIndex(n), t = biHighIndex(n); t > -1; --t)
+        i += digitToHex(n.digits[t]);
+    return i
+}
+function charToHex(n) {
+    var t = 48
+      , u = t + 9
+      , i = 97
+      , f = i + 25
+      , r = 65;
+    return n >= t && n <= u ? n - t : n >= r && n <= 90 ? 10 + n - r : n >= i && n <= f ? 10 + n - i : 0
+}
+function hexToDigit(n) {
+    for (var t = 0, r = Math.min(n.length, 4), i = 0; i < r; ++i)
+        t <<= 4,
+        t |= charToHex(n.charCodeAt(i));
+    return t
+}
+function biFromHex(n) {
+    for (var i = new BigInt, u = n.length, t = u, r = 0; t > 0; t -= 4,
+    ++r)
+        i.digits[r] = hexToDigit(n.substr(Math.max(t - 4, 0), Math.min(t, 4)));
+    return i
+}
+function biFromString(n, t) {
+    var f = n.charAt(0) == "-", e = f ? 1 : 0, i = new BigInt, r = new BigInt, u;
+    for (r.digits[0] = 1,
+    u = n.length - 1; u >= e; u--) {
+        var o = n.charCodeAt(u)
+          , s = charToHex(o)
+          , h = biMultiplyDigit(r, s);
+        i = biAdd(i, h);
+        r = biMultiplyDigit(r, t)
     }
-    8 == c && 0 != (128 & a[0]) && (this.s = -1,
-    g > 0 && (this[this.t - 1] |= (1 << this.DB - g) - 1 << g)),
-        this.clamp(),
-    f && d.ZERO.subTo(this, this)
+    return i.isNeg = f,
+    i
 }
-function j(a, b) {
-    var c = ob[a.charCodeAt(b)];
-    return null == c ? -1 : c
+function biDump(n) {
+    return (n.isNeg ? "-" : "") + n.digits.join(" ")
 }
-eb.filter = function(a, b, c) {
-    var d = b[0];
-    return c && (a = ":not(" + a + ")"),
-        1 === b.length && 1 === d.nodeType ? eb.find.matchesSelector(d, a) ? [d] : [] : eb.find.matches(a, eb.grep(b, function(a) {
-            return 1 === a.nodeType
-        }))
-}
-eb.fn.extend({
-    val: function(a) {
-        var b, c, d, e = this[0];
-        return arguments.length ? (d = eb.isFunction(a),
-            this.each(function(c) {
-                var e;
-                1 === this.nodeType && (e = d ? a.call(this, c, eb(this).val()) : a,
-                    null == e ? e = "" : "number" == typeof e ? e += "" : eb.isArray(e) && (e = eb.map(e, function(a) {
-                        return null == a ? "" : a + ""
-                    })),
-                    b = eb.valHooks[this.type] || eb.valHooks[this.nodeName.toLowerCase()],
-                b && "set"in b && void 0 !== b.set(this, e, "value") || (this.value = e))
-            })) : e ? (b = eb.valHooks[e.type] || eb.valHooks[e.nodeName.toLowerCase()],
-            b && "get"in b && void 0 !== (c = b.get(e, "value")) ? c : (c = e.value,
-                "string" == typeof c ? c.replace(uc, "") : null == c ? "" : c)) : void 0
+function biAdd(n, t) {
+    var r, u, f, i;
+    if (n.isNeg != t.isNeg)
+        t.isNeg = !t.isNeg,
+        r = biSubtract(n, t),
+        t.isNeg = !t.isNeg;
+    else {
+        for (r = new BigInt,
+        u = 0,
+        i = 0; i < n.digits.length; ++i)
+            f = n.digits[i] + t.digits[i] + u,
+            r.digits[i] = f % biRadix,
+            u = Number(f >= biRadix);
+        r.isNeg = n.isNeg
     }
-})
-function t(a) {
-    var b, c = 1;
-    return 0 != (b = a >>> 16) && (a = b,
-        c += 16),
-    0 != (b = a >> 8) && (a = b,
-        c += 8),
-    0 != (b = a >> 4) && (a = b,
-        c += 4),
-    0 != (b = a >> 2) && (a = b,
-        c += 2),
-    0 != (b = a >> 1) && (a = b,
-        c += 1),
-        c
+    return r
 }
-function u() {
-    return this.t <= 0 ? 0 : this.DB * (this.t - 1) + t(this[this.t - 1] ^ this.s & this.DM)
-}
-function _(a) {
-    var b;
-    for (b = 0; b < a.length; ++b)
-        a[b] = $()
-}
-function $() {
-    if (null == pb) {
-        for (Z(),
-                 pb = X(),
-                 pb.init(qb),
-                 rb = 0; rb < qb.length; ++rb)
-            qb[rb] = 0;
-        rb = 0
+function biSubtract(n, t) {
+    var r, f, u, i;
+    if (n.isNeg != t.isNeg)
+        t.isNeg = !t.isNeg,
+        r = biAdd(n, t),
+        t.isNeg = !t.isNeg;
+    else {
+        for (r = new BigInt,
+        u = 0,
+        i = 0; i < n.digits.length; ++i)
+            f = n.digits[i] - t.digits[i] + u,
+            r.digits[i] = f % biRadix,
+            r.digits[i] < 0 && (r.digits[i] += biRadix),
+            u = 0 - Number(f < 0);
+        if (u == -1) {
+            for (u = 0,
+            i = 0; i < n.digits.length; ++i)
+                f = 0 - r.digits[i] + u,
+                r.digits[i] = f % biRadix,
+                r.digits[i] < 0 && (r.digits[i] += biRadix),
+                u = 0 - Number(f < 0);
+            r.isNeg = !n.isNeg
+        } else
+            r.isNeg = n.isNeg
     }
-    return pb.next()
+    return r
 }
-function W() {
-    var a;
-    return this.i = this.i + 1 & 255,
-        this.j = this.j + this.S[this.i] & 255,
-        a = this.S[this.i],
-        this.S[this.i] = this.S[this.j],
-        this.S[this.j] = a,
-        this.S[a + this.S[this.i] & 255]
+function biHighIndex(n) {
+    for (var t = n.digits.length - 1; t > 0 && n.digits[t] == 0; )
+        --t;
+    return t
 }
-function X() {
-    return new U
+function biNumBits(n) {
+    for (var i = biHighIndex(n), r = n.digits[i], u = (i + 1) * bitsPerDigit, t = u; t > u - bitsPerDigit; --t) {
+        if ((r & 32768) != 0)
+            break;
+        r <<= 1
+    }
+    return t
 }
-function Y(a) {
-    qb[rb++] ^= 255 & a,
-        qb[rb++] ^= a >> 8 & 255,
-        qb[rb++] ^= a >> 16 & 255,
-        qb[rb++] ^= a >> 24 & 255,
-    rb >= sb && (rb -= sb)
+function biMultiply(n, t) {
+    for (var i = new BigInt, u, o = biHighIndex(n), s = biHighIndex(t), e, f, r = 0; r <= s; ++r) {
+        for (u = 0,
+        f = r,
+        j = 0; j <= o; ++j,
+        ++f)
+            e = i.digits[f] + n.digits[j] * t.digits[r] + u,
+            i.digits[f] = e & maxDigitVal,
+            u = e >>> biRadixBits;
+        i.digits[r + o + 1] = u
+    }
+    return i.isNeg = n.isNeg != t.isNeg,
+    i
 }
-function Z() {
-    Y((new Date).getTime())
+function biMultiplyDigit(n, t) {
+    var u, r, f, i;
+    for (result = new BigInt,
+    u = biHighIndex(n),
+    r = 0,
+    i = 0; i <= u; ++i)
+        f = result.digits[i] + n.digits[i] * t + r,
+        result.digits[i] = f & maxDigitVal,
+        r = f >>> biRadixBits;
+    return result.digits[1 + u] = r,
+    result
 }
-function T(a, b) {
-    var c;
-    return c = 256 > a || b.isEven() ? new E(b) : new L(b),
-        this.exp(a, c)
+function arrayCopy(n, t, i, r, u) {
+    for (var o = Math.min(t + u, n.length), f = t, e = r; f < o; ++f,
+    ++e)
+        i[e] = n[f]
 }
-function U() {
-    this.i = 0,
-        this.j = 0,
-        this.S = new Array
+function biShiftLeft(n, t) {
+    var e = Math.floor(t / bitsPerDigit), i = new BigInt, u, o, r, f;
+    for (arrayCopy(n.digits, 0, i.digits, e, i.digits.length - e),
+    u = t % bitsPerDigit,
+    o = bitsPerDigit - u,
+    r = i.digits.length - 1,
+    f = r - 1; r > 0; --r,
+    --f)
+        i.digits[r] = i.digits[r] << u & maxDigitVal | (i.digits[f] & highBitMasks[u]) >>> o;
+    return i.digits[0] = i.digits[r] << u & maxDigitVal,
+    i.isNeg = n.isNeg,
+    i
 }
-function V(a) {
-    var b, c, d;
-    for (b = 0; 256 > b; ++b)
-        this.S[b] = b;
-    for (c = 0,
-             b = 0; 256 > b; ++b)
-        c = c + this.S[b] + a[b % a.length] & 255,
-            d = this.S[b],
-            this.S[b] = this.S[c],
-            this.S[c] = d;
-    this.i = 0,
-        this.j = 0
+function biShiftRight(n, t) {
+    var e = Math.floor(t / bitsPerDigit), i = new BigInt, u, o, r, f;
+    for (arrayCopy(n.digits, e, i.digits, 0, n.digits.length - e),
+    u = t % bitsPerDigit,
+    o = bitsPerDigit - u,
+    r = 0,
+    f = r + 1; r < i.digits.length - 1; ++r,
+    ++f)
+        i.digits[r] = i.digits[r] >>> u | (i.digits[f] & lowBitMasks[u]) << o;
+    return i.digits[i.digits.length - 1] >>>= u,
+    i.isNeg = n.isNeg,
+    i
 }
-function P(a, b) {
-    a.squareTo(b),
-        this.reduce(b)
+function biMultiplyByRadixPower(n, t) {
+    var i = new BigInt;
+    return arrayCopy(n.digits, 0, i.digits, t, i.digits.length - t),
+    i
 }
-function Q(a, b, c) {
-    a.multiplyTo(b, c),
-        this.reduce(c)
+function biDivideByRadixPower(n, t) {
+    var i = new BigInt;
+    return arrayCopy(n.digits, t, i.digits, 0, i.digits.length - t),
+    i
 }
-function R() {
-    return 0 == (this.t > 0 ? 1 & this[0] : this.s)
+function biModuloByRadixPower(n, t) {
+    var i = new BigInt;
+    return arrayCopy(n.digits, 0, i.digits, 0, t),
+    i
 }
-function S(a, b) {
-    if (a > 4294967295 || 1 > a)
-        return d.ONE;
-    var c = e()
-        , f = e()
-        , g = b.convert(this)
-        , h = t(a) - 1;
-    for (g.copyTo(c); --h >= 0; )
-        if (b.sqrTo(c, f),
-        (a & 1 << h) > 0)
-            b.mulTo(f, g, c);
-        else {
-            var i = c;
-            c = f,
-                f = i
-        }
-    return b.revert(c)
+function biCompare(n, t) {
+    if (n.isNeg != t.isNeg)
+        return 1 - 2 * Number(n.isNeg);
+    for (var i = n.digits.length - 1; i >= 0; --i)
+        if (n.digits[i] != t.digits[i])
+            return n.isNeg ? 1 - 2 * Number(n.digits[i] > t.digits[i]) : 1 - 2 * Number(n.digits[i] < t.digits[i]);
+    return 0
 }
+function biDivideModulo(n, t) {
+    var a = biNumBits(n), s = biNumBits(t), v = t.isNeg, r, i, u, e, h, o, f, y, p;
+    if (a < s)
+        return n.isNeg ? (r = biCopy(bigOne),
+        r.isNeg = !t.isNeg,
+        n.isNeg = !1,
+        t.isNeg = !1,
+        i = biSubtract(t, n),
+        n.isNeg = !0,
+        t.isNeg = v) : (r = new BigInt,
+        i = biCopy(n)),
+        [r, i];
+    for (r = new BigInt,
+    i = n,
+    u = Math.ceil(s / bitsPerDigit) - 1,
+    e = 0; t.digits[u] < biHalfRadix; )
+        t = biShiftLeft(t, 1),
+        ++e,
+        ++s,
+        u = Math.ceil(s / bitsPerDigit) - 1;
+    for (i = biShiftLeft(i, e),
+    a += e,
+    h = Math.ceil(a / bitsPerDigit) - 1,
+    o = biMultiplyByRadixPower(t, h - u); biCompare(i, o) != -1; )
+        ++r.digits[h - u],
+        i = biSubtract(i, o);
+    for (f = h; f > u; --f) {
+        var c = f >= i.digits.length ? 0 : i.digits[f]
+          , w = f - 1 >= i.digits.length ? 0 : i.digits[f - 1]
+          , b = f - 2 >= i.digits.length ? 0 : i.digits[f - 2]
+          , l = u >= t.digits.length ? 0 : t.digits[u]
+          , k = u - 1 >= t.digits.length ? 0 : t.digits[u - 1];
+        for (r.digits[f - u - 1] = c == l ? maxDigitVal : Math.floor((c * biRadix + w) / l),
+        y = r.digits[f - u - 1] * (l * biRadix + k),
+        p = c * biRadixSquared + (w * biRadix + b); y > p; )
+            --r.digits[f - u - 1],
+            y = r.digits[f - u - 1] * (l * biRadix | k),
+            p = c * biRadix * biRadix + (w * biRadix + b);
+        o = biMultiplyByRadixPower(t, f - u - 1);
+        i = biSubtract(i, biMultiplyDigit(o, r.digits[f - u - 1]));
+        i.isNeg && (i = biAdd(i, o),
+        --r.digits[f - u - 1])
+    }
+    return i = biShiftRight(i, e),
+    r.isNeg = n.isNeg != v,
+    n.isNeg && (r = v ? biAdd(r, bigOne) : biSubtract(r, bigOne),
+    t = biShiftRight(t, e),
+    i = biSubtract(t, i)),
+    i.digits[0] == 0 && biHighIndex(i) == 0 && (i.isNeg = !1),
+    [r, i]
+}
+function biDivide(n, t) {
+    return biDivideModulo(n, t)[0]
+}
+function biModulo(n, t) {
+    return biDivideModulo(n, t)[1]
+}
+function biMultiplyMod(n, t, i) {
+    return biModulo(biMultiply(n, t), i)
+}
+function biPow(n, t) {
+    for (var r = bigOne, i = n; ; ) {
+        if ((t & 1) != 0 && (r = biMultiply(r, i)),
+        t >>= 1,
+        t == 0)
+            break;
+        i = biMultiply(i, i)
+    }
+    return r
+}
+function biPowMod(n, t, i) {
+    for (var f = bigOne, u = n, r = t; ; ) {
+        if ((r.digits[0] & 1) != 0 && (f = biMultiplyMod(f, u, i)),
+        r = biShiftRight(r, 1),
+        r.digits[0] == 0 && biHighIndex(r) == 0)
+            break;
+        u = biMultiplyMod(u, u, i)
+    }
+    return f
+}
+function BarrettMu(n) {
+    this.modulus = biCopy(n);
+    this.k = biHighIndex(this.modulus) + 1;
+    var t = new BigInt;
+    t.digits[2 * this.k] = 1;
+    this.mu = biDivide(t, this.modulus);
+    this.bkplus1 = new BigInt;
+    this.bkplus1.digits[this.k + 1] = 1;
+    this.modulo = BarrettMu_modulo;
+    this.multiplyMod = BarrettMu_multiplyMod;
+    this.powMod = BarrettMu_powMod
+}
+function BarrettMu_modulo(n) {
+    var r = biDivideByRadixPower(n, this.k - 1), u = biMultiply(r, this.mu), f = biDivideByRadixPower(u, this.k + 1), e = biModuloByRadixPower(n, this.k + 1), o = biMultiply(f, this.modulus), s = biModuloByRadixPower(o, this.k + 1), t = biSubtract(e, s), i;
+    for (t.isNeg && (t = biAdd(t, this.bkplus1)),
+    i = biCompare(t, this.modulus) >= 0; i; )
+        t = biSubtract(t, this.modulus),
+        i = biCompare(t, this.modulus) >= 0;
+    return t
+}
+function BarrettMu_multiplyMod(n, t) {
+    var i = biMultiply(n, t);
+    return this.modulo(i)
+}
+function BarrettMu_powMod(n, t) {
+    var u = new BigInt, r, i;
+    for (u.digits[0] = 1,
+    r = n,
+    i = t; ; ) {
+        if ((i.digits[0] & 1) != 0 && (u = this.multiplyMod(u, r)),
+        i = biShiftRight(i, 1),
+        i.digits[0] == 0 && biHighIndex(i) == 0)
+            break;
+        r = this.multiplyMod(r, r)
+    }
+    return u
+}
+function RSAKeyPair(n, t, i) {
+    this.e = biFromHex(n);
+    this.d = biFromHex(t);
+    this.m = biFromHex(i);
+    this.digitSize = 2 * biHighIndex(this.m) + 2;
+    this.chunkSize = this.digitSize - 11;
+    this.radix = 16;
+    this.barrett = new BarrettMu(this.m)
+}
+function twoDigit(n) {
+    return (n < 10 ? "0" : "") + String(n)
+}
+function encryptedString(n, t) {
+    var e, o, s, h, c, i, f, u, v, l, y;
+    if (n.chunkSize > n.digitSize - 11)
+        return "Error";
+    for (var a = [], p = t.length, r = 0; r < p; )
+        a[r] = t.charCodeAt(r),
+        r++;
+    for (e = a.length,
+    o = "",
+    r = 0; r < e; r += n.chunkSize) {
+        for (c = new BigInt,
+        s = 0,
+        f = r + n.chunkSize > e ? e % n.chunkSize : n.chunkSize,
+        u = [],
+        i = 0; i < f; i++)
+            u[i] = a[r + f - 1 - i];
+        for (u[f] = 0,
+        v = Math.max(8, n.digitSize - 3 - f),
+        i = 0; i < v; i++)
+            u[f + 1 + i] = Math.floor(Math.random() * 254) + 1;
+        for (u[n.digitSize - 2] = 2,
+        u[n.digitSize - 1] = 0,
+        h = 0; h < n.digitSize; ++s)
+            c.digits[s] = u[h++],
+            c.digits[s] += u[h++] << 8;
+        l = n.barrett.powMod(c, n.e);
+        y = n.radix == 16 ? biToHex(l) : biToString(l, n.radix);
+        o += y + " "
+    }
+    return o.substring(0, o.length - 1)
+}
+function decryptedString(n, t) {
+    for (var e = t.split(" "), i = "", r, u, o, f = 0; f < e.length; ++f)
+        for (o = n.radix == 16 ? biFromHex(e[f]) : biFromString(e[f], n.radix),
+        u = n.barrett.powMod(o, n.d),
+        r = 0; r <= biHighIndex(u); ++r)
+            i += String.fromCharCode(u.digits[r] & 255, u.digits[r] >> 8);
+    return i.charCodeAt(i.length - 1) == 0 && (i = i.substring(0, i.length - 1)),
+    i
+}
+var biRadixBase = 2, biRadixBits = 16, bitsPerDigit = biRadixBits, biRadix = 65536, biHalfRadix = biRadix >>> 1, biRadixSquared = biRadix * biRadix, maxDigitVal = biRadix - 1, maxInteger = 9999999999999998, maxDigits, ZERO_ARRAY, bigZero, bigOne, dpl10, lr10, hexatrigesimalToChar, hexToChar, highBitMasks, lowBitMasks;
+setMaxDigits(20);
+dpl10 = 15;
+lr10 = biFromNumber(1e15);
+hexatrigesimalToChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+hexToChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+highBitMasks = [0, 32768, 49152, 57344, 61440, 63488, 64512, 65024, 65280, 65408, 65472, 65504, 65520, 65528, 65532, 65534, 65535];
+lowBitMasks = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535];
+setMaxDigits(129);
 
-eb.each({
-    parent: function(a) {
-        var b = a.parentNode;
-        return b && 11 !== b.nodeType ? b : null
-    },
-    parents: function(a) {
-        return eb.dir(a, "parentNode")
-    },
-    parentsUntil: function(a, b, c) {
-        return eb.dir(a, "parentNode", c)
-    },
-    next: function(a) {
-        return e(a, "nextSibling")
-    },
-    prev: function(a) {
-        return e(a, "previousSibling")
-    },
-    nextAll: function(a) {
-        return eb.dir(a, "nextSibling")
-    },
-    prevAll: function(a) {
-        return eb.dir(a, "previousSibling")
-    },
-    nextUntil: function(a, b, c) {
-        return eb.dir(a, "nextSibling", c)
-    },
-    prevUntil: function(a, b, c) {
-        return eb.dir(a, "previousSibling", c)
-    },
-    siblings: function(a) {
-        return eb.sibling((a.parentNode || {}).firstChild, a)
-    },
-    children: function(a) {
-        return eb.sibling(a.firstChild)
-    },
-    contents: function(a) {
-        return eb.nodeName(a, "iframe") ? a.contentDocument || a.contentWindow.document : eb.merge([], a.childNodes)
-    }
-}, function(a, b) {
-    eb.fn[a] = function(c, d) {
-        var e = eb.map(this, b, c);
-        return "Until" !== a.slice(-5) && (d = c),
-        d && "string" == typeof d && (e = eb.filter(d, e)),
-        this.length > 1 && (sb[a] || (e = eb.unique(e)),
-        rb.test(a) && (e = e.reverse())),
-            this.pushStack(e)
-    }
-});
-var i = {}
-i.page = {
-    loadList: function(a) {
-        var b = $(a.wrapExpr)
-            , c = b.length;
-        if (0 >= c)
-            return null;
-        if (1 == c)
-            return a.wrap = b,
-                new g(a);
-        var d = [];
-        return b.each(function() {
-            var b = $.extend(!0, {}, a, {
-                wrap: $(this)
-            });
-            d.push(new g(b))
-        }),
-            b = null,
-            d
-    },
-    scrollToMobile: function(a) {
-        1 != $("#J_IsPc").val() && $(window).scrollTop($(a).offset().top)
-    },
-    newtvTip: function(a) {
-        $("#J_NewTVTip")[0] || ($("body").append('<div class="newtv-tip" id="J_NewTVTip">' + a + '</div><div class="newtv-mask" id="J_NewTVMask"></div>'),
-            setTimeout(function() {
-                $("#J_NewTVTip,#J_NewTVMask").remove()
-            }, 2e3))
-    },
-    saveFingerprint: function() {
-        var a, b = "{", c = new Fingerprint2({
-            excludeCanvas: !0,
-            excludeWebGL: !0
-        });
-        c.get(function(c, d) {
-            if ("undefined" != typeof window.console) {
-                for (var e in d) {
-                    var f = d[e]
-                        , g = f.value;
-                    b += '"' + f.key + '":"' + g.toString().substr(0, 100) + '",'
-                }
-                b = b.substring(0, b.length - 1),
-                    b += "}"
-            }
-            a = c,
-                $.fingerprint = {
-                    details: b,
-                    result: a
-                }
-        })
-    },
-    rsaFingerprint: function(a, b) {
-        if (!$.fingerprint)
-            return {
-                details: "",
-                result: ""
-            };
-        var c = $.fingerprint.details
-            , d = $.fingerprint.result
-            , e = c.length
-            , f = ""
-            , g = new m.RSAKey;
-        g.setPublic(a, b);
-        for (var h = g.encrypt(d), i = 0; e > i; i += 117)
-            f += g.encrypt(c.substr(i, 117));
-        return {
-            details: f,
-            result: h
-        }
-    },
-    getFingerRsaParams: function(a) {
-        var b = {};
-        return i.common.ajax({
-            url: a,
-            async: !1,
-            success: function(a) {
-                (a.status = j.ajax.SUCCESS) && (b = i.page.rsaFingerprint(a.result.modulus, a.result.publicExponent))
-            }
-        }),
-            b
-    },
-    saveFingerResult: function(a, b) {
-        var c = new Fingerprint2({
-            excludeCanvas: !0,
-            excludeWebGL: !0
-        });
-        c.get(function(c) {
-            i.common.ajax({
-                url: a,
-                async: !1,
-                success: function(a) {
-                    if (a.status = j.ajax.SUCCESS) {
-                        var d = new m.RSAKey;
-                        d.setPublic(a.result.modulus, a.result.publicExponent);
-                        var e = d.encrypt(c);
-                        b(e)
-                    }
-                }
-            })
-        })
-    },
-    rsaLongStr: function(a, b) {
-        var c = [];
-        return i.common.ajax({
-            url: a,
-            async: !1,
-            success: function(a) {
-                if (a.status = j.ajax.SUCCESS) {
-                    var d = new m.RSAKey;
-                    d.setPublic(a.result.modulus, a.result.publicExponent);
-                    for (var e = 0, f = b.length; f > e; e += 117)
-                        c.push(d.encrypt(b.substr(e, 117)))
-                }
-            }
-        }),
-            c.join(",")
-    },
-    imgCodeHandler: $.noop,
-    setImgType: function(a, b, c) {
-        $(".j_imgtype:first").val(a).data("isRisk", b).data("isPreventImgSlide", c)
-    },
-    getImgType: function() {
-        var a = $(".j_imgtype:first");
-        return {
-            val: a.val(),
-            isRisk: !!a.data("isRisk"),
-            isPreventImgSlide: !!a.data("isPreventImgSlide")
-        }
-    },
-    getImgSlideStatus: $.noop,
-    dynamicHandler: $.noop,
-    staticSubmitHandler: $.noop,
-    successSubmit: function(a) {
-        var b = a
-            , c = b.position()
-            , d = c.left
-            , e = c.top
-            , f = parseInt(b.css("marginTop").replace("px", ""), 10);
-        width = b.outerWidth(),
-            height = b.outerHeight() - 16,
-            d = d + width / 2 + 35,
-            e = e + f + height / 2;
-        var g = '<div style="left:' + d + "px; position: absolute; top: " + e + 'px;"><img src="/images/success.gif?r=' + Math.random() + '"></div>';
-        b.parent().append(g)
-    }
-}
-
-var modulus =  ""
-var publicExponent= "010001"
-
-// c.setPublic(modulus, publicExponent);
-// var d = c.encrypt('123333');
-// // b.siblings(".J_RsaPsd").val(d)
-// console.log(d);
-
-function bodyRSA()
-{
-    var key = RSAUtils.getKeyPair("010001","","00833c4af965ff7a8409f8b5d5a83d87f2f19d7c1eb40dc59a98d2346cbb145046b2c6facc25b5cc363443f0f7ebd9524b7c1e1917bf7d849212339f6c1d3711b115ecb20f0c89fc2182a985ea28cbb4adf6a321ff7e715ba9b8d7261d1c140485df3b705247a70c28c9068caabbedbf9510dada6d13d99e57642b853a73406817");
-    return key
-}
-function get_encrypt(password) {
-    key = bodyRSA();
-    var a = RSAUtils.encryptedString(key,password)
-
-    //var b = RSAUtils.encryptedString(key,username)
-    console.log(a)
-    console.log('----------------------------------')
-    //console.log(b)
-    return a
-}
-get_encrypt('11111111111')
-
+var key_to_encode = new RSAKeyPair("010001", "", "00833c4af965ff7a8409f8b5d5a83d87f2f19d7c1eb40dc59a98d2346cbb145046b2c6facc25b5cc363443f0f7ebd9524b7c1e1917bf7d849212339f6c1d3711b115ecb20f0c89fc2182a985ea28cbb4adf6a321ff7e715ba9b8d7261d1c140485df3b705247a70c28c9068caabbedbf9510dada6d13d99e57642b853a73406817");
+console.log(encryptedString(key_to_encode, '1123456'))

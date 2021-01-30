@@ -22,7 +22,7 @@ data = {
 
 
 def parse_body_js(password):
-    f = open('params_js.js', encoding='utf-8')
+    f = open('ftx_rsa.js', encoding='utf-8')
     line = f.readline()
     html_str = ''
     while line:
@@ -34,9 +34,9 @@ def parse_body_js(password):
 
 
 if __name__ == '__main__':
-    # TODO xxxx 电话号码
+    # 电话号码
     data.update({'uid': '123455'})
-    # TODO xxxx 密码
+    # 密码
     params = parse_body_js('12345678')
     data.update({'pwd': f"{params}"})
     print(data)
